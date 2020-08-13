@@ -1,0 +1,42 @@
+{
+    "music": [
+        {
+            "id": 1,
+            "name": "RUN WILD. LIVE FREE. LOVE STRONG.",
+            "price": 1099,
+            "imgName": "run_wild_live_free_love_strong.jpg"
+        },
+        {
+            "id": 2,
+            "name": "Run",
+            "price": 1299,
+            "imgName": "sanctus_real_run.jpg"
+        },
+        {
+            "id": 3,
+            "name": "What We Want, What We Get",
+            "price": 1599,
+            "imgName": "what_we_want_what_we_get.jpg"
+        },
+        {
+            "id": 4,
+            "name": "Gave You My Heart",
+            "price": 299,
+            "imgName": "gave_you_my_heart.jpg"
+        }
+    ],
+    "merch": [
+        {
+            "id": 5,
+            "name": "Sour Cherry T-Shirt",
+            "price": 499,
+            "imgName": "sour_cherry_shirt.jpeg"
+        },
+        {
+            "id": 6,
+            "name": "Blue Navy T-Shirt",
+            "price": 899,
+            "imgName": "blue_tshirt.jpg"
+        }
+    ]
+}
