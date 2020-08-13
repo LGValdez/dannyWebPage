@@ -1,3 +1,5 @@
+var stripe = Stripe(stripePublicKey)
+
 if (document.readyState == 'loading') {
     document.addEventListener('COMContentLoaded', ready);
 } else {
@@ -22,54 +24,39 @@ function ready() {
 
 }
 
-var stripeHandler = StripeCheckout.configure({
-    key: stripePublicKey,
-    locale: 'auto',
-    token: function(token){
-        var items = []
-        var cartItemContainer = document.getElementsByClassName('cart-items')[0]
-        var cartRows = cartItemContainer.getElementsByClassName('cart-row')
-        for (var i = 0; i < cartRows.length; i++) {
-            var cartRow = cartRows[i]
-            var quantityElement = cartRow.getElementsByClassName('cart-quantity-input')[0]
-            var quantity = quantityElement.value
-            var id = cartRow.dataset.itemId
-            items.push({
-                id: id,
-                quantity: quantity
-            })   
-        }
-
-        fetch('/purchase', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-                stripeTokenId: token.id,
-                items: items
-            })
-        }).then(res => {
-            return res.json()
-        }).then(data => {
-            alert(data.message)
-            var cartItems = document.getElementsByClassName('cart-items')[0]
-            while (cartItems.hasChildNodes()) {
-                cartItems.removeChild(cartItems.firstChild)
-            }
-            updateCartTotal()
-        }).catch(error => {
-            console.error(error)
-        })
-    }
-})
-
 function purchaseClicked() {
-    var priceElement = document.getElementsByClassName('cart-total-price')[0]
-    var price = parseFloat(priceElement.innerText.replace('$', '')) * 100
-    stripeHandler.open({
-        amount: price
+    var items = []
+    var cartItemContainer = document.getElementsByClassName('cart-items')[0]
+    var cartRows = cartItemContainer.getElementsByClassName('cart-row')
+    for (var i = 0; i < cartRows.length; i++) {
+        var cartRow = cartRows[i]
+        var quantityElement = cartRow.getElementsByClassName('cart-quantity-input')[0]
+        var quantity = quantityElement.value
+        var id = cartRow.dataset.itemId
+        items.push({
+            id: id,
+            quantity: quantity
+        }) 
+    }
+
+    fetch('/purchase', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+            items: items
+        })
+    }).then(response => {
+        return response.json()
+    }).then(responseJson => {
+        var sessionId = responseJson.session_id
+        stripe.redirectToCheckout({
+            'sessionId': sessionId
+        }).then(result => {
+            console.log('Something went wrong')
+        })
     })
 }
 
