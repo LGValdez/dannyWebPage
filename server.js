@@ -34,23 +34,30 @@ app.post('/purchase', function(req, res) {
         } else {
             const itemsJson = JSON.parse(data)
             const itemsArray = itemsJson.music.concat(itemsJson.merch)
-            let total = 0
+            let itemsList = []
             req.body.items.forEach(element => {
                 const itemJson = itemsArray.find(i => {
                     return i.id == element.id
                 })
-                total = total + itemJson.price * element.quantity
+                itemsList.push({
+                    'price_data': {
+                        'currency': 'usd',
+                        'product_data': {
+                            'name': itemJson.name,
+                        },
+                        'unit_amount': itemJson.price
+                    },
+                    'quantity': element.quantity
+                })
             })
-            stripe.charges.create({
-                amount: total,
-                source: req.body.stripeTokenId,
-                currency: 'usd'
-            }).then(() => {
-                console.log('Charge Successful')
-                res.json({ message: 'Successfully purchased items'})
-            }).catch(() => {
-                console.log('Charge Fail')
-                res.status(500).end()
+            stripe.checkout.sessions.create({
+                'payment_method_types': ['card'],
+                'line_items': itemsList,
+                'mode': 'payment',
+                'success_url': 'http://localhost:3000/',
+                'cancel_url': 'http://localhost:3000/store',
+            }).then(session => {
+                res.json({'session_id': session.id})
             })
         }
     })
