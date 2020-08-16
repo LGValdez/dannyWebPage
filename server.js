@@ -54,8 +54,8 @@ app.post('/purchase', function(req, res) {
                 'payment_method_types': ['card'],
                 'line_items': itemsList,
                 'mode': 'payment',
-                'success_url': 'http://localhost:3000/',
-                'cancel_url': 'http://localhost:3000/store',
+                'success_url': process.env.BASE_URL,
+                'cancel_url': process.env.BASE_URL + '/store',
             }).then(session => {
                 res.json({'session_id': session.id})
             })
@@ -63,4 +63,4 @@ app.post('/purchase', function(req, res) {
     })
 })
 
-app.listen(3000)
+app.listen(process.env.PORT || 3000)
