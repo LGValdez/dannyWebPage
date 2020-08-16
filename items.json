@@ -28,15 +28,15 @@
     "merch": [
         {
             "id": 5,
-            "name": "Sour Cherry T-Shirt",
-            "price": 499,
-            "imgName": "sour_cherry_shirt.jpeg"
+            "name": "Sour Cherry Shirt",
+            "price": 799,
+            "imgName": "sour_cherry_shirt.jpg"
         },
         {
             "id": 6,
-            "name": "Blue Navy T-Shirt",
-            "price": 899,
-            "imgName": "blue_tshirt.jpg"
+            "name": "Rustic Design Guitar",
+            "price": 7999,
+            "imgName": "rustic_design_guitar.jpg"
         }
     ]
 }
