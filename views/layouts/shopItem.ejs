@@ -1,0 +1,8 @@
+<div class="shop-item" data-item-id="<%= item.id %>">
+    <span class="shop-item-title"><%= item.name %></span>
+    <img src="<%= imageDir %>/<%= item.imgName %>" class="shop-item-image">
+    <div class="shop-item-details">
+        <span class="shop-item-price">$<%= item.price / 100 %></span>
+        <button class="btn btn-primary shop-item-btn" role="button">ADD TO CART</button>
+    </div>
+</div>
